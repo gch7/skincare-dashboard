@@ -1,0 +1,842 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<title>🌊 Skincare Mare — Mara · 5 Lug → 5 Ago 2026</title>
+
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="default" />
+<meta name="apple-mobile-web-app-title" content="Skincare Mare" />
+<meta name="theme-color" content="#7ec4d9" />
+
+<style>
+  :root {
+    --bg: #f0f7fa;
+    --card: #ffffff;
+    --sea: #7ec4d9;
+    --sea-dark: #3f8aa3;
+    --sun: #f7b733;
+    --sun-dark: #c47e0c;
+    --coral: #ff8a7a;
+    --coral-dark: #d65a48;
+    --sand: #f5e6c8;
+    --text: #1f2a36;
+    --muted: #5a6975;
+    --border: #d7e5ed;
+    --warning: #fff1c4;
+    --warning-text: #8a6a00;
+    --success: #d6efd6;
+    --success-text: #2a6b2a;
+    --info: #d8e8f5;
+    --info-text: #2a5a8a;
+    --urgent: #ffd9d6;
+    --urgent-text: #8a2c33;
+    --shadow: 0 4px 14px rgba(63,138,163,0.10);
+  }
+  * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "SF Pro Display", Helvetica, Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.5;
+    padding-bottom: env(safe-area-inset-bottom);
+    overscroll-behavior-y: contain;
+  }
+  button { touch-action: manipulation; }
+  header {
+    background: linear-gradient(160deg, #7ec4d9 0%, #f7b733 100%);
+    padding: calc(28px + env(safe-area-inset-top)) 24px 28px;
+    text-align: center;
+    color: #1a2d3a;
+    position: relative;
+    overflow: hidden;
+  }
+  header::after {
+    content: "🌊";
+    position: absolute;
+    bottom: -10px;
+    right: 10px;
+    font-size: 60px;
+    opacity: 0.18;
+  }
+  header h1 { margin: 0 0 6px 0; font-size: 28px; font-weight: 700; letter-spacing: -0.5px; }
+  header p { margin: 4px 0; font-size: 14px; }
+  header .date-banner {
+    display: inline-block;
+    background: rgba(255,255,255,0.6);
+    padding: 6px 14px;
+    border-radius: 50px;
+    font-weight: 700;
+    margin-top: 8px;
+    font-size: 13px;
+  }
+
+  nav.sections {
+    position: sticky; top: 0; z-index: 100;
+    background: var(--card);
+    border-bottom: 1px solid var(--border);
+    box-shadow: 0 2px 8px rgba(63,138,163,0.06);
+    padding: 10px;
+    overflow-x: auto;
+    white-space: nowrap;
+    display: flex;
+    gap: 6px;
+    justify-content: center;
+  }
+  nav.sections button {
+    border: 2px solid var(--border);
+    background: var(--card);
+    color: var(--text);
+    padding: 10px 14px;
+    border-radius: 50px;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 600;
+    font-family: inherit;
+    min-width: 78px;
+    transition: all 0.2s;
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    line-height: 1.2;
+  }
+  nav.sections button:hover { border-color: var(--sea); transform: translateY(-1px); }
+  nav.sections button.active {
+    background: var(--sea);
+    color: white;
+    border-color: var(--sea);
+    box-shadow: 0 4px 12px rgba(126,196,217,0.5);
+  }
+  nav.sections button .label { font-size: 10px; opacity: 0.75; margin-top: 2px; font-weight: 400; }
+
+  main { max-width: 1100px; margin: 0 auto; padding: 24px 16px 80px; }
+
+  .panel { display: none; animation: fadeIn 0.3s ease; }
+  .panel.active { display: block; }
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .panel-title { text-align: center; margin: 18px 0 6px; font-size: 30px; font-weight: 700; color: var(--sea-dark); }
+  .panel-subtitle { text-align: center; color: var(--muted); margin-bottom: 24px; font-size: 15px; }
+
+  .session {
+    background: var(--card);
+    border-radius: 18px;
+    padding: 22px;
+    margin-bottom: 24px;
+    box-shadow: var(--shadow);
+    border: 1px solid var(--border);
+  }
+  .session.morning { background: linear-gradient(180deg, #fef7e0 0%, #fff 70%); border-top: 4px solid var(--sun); }
+  .session.midday { background: linear-gradient(180deg, #e0f4fa 0%, #fff 70%); border-top: 4px solid var(--sea); }
+  .session.evening { background: linear-gradient(180deg, #f0eafa 0%, #fff 70%); border-top: 4px solid #8a7cc9; }
+
+  .session-header { display: flex; align-items: center; gap: 12px; margin-bottom: 18px; }
+  .session-icon { font-size: 30px; line-height: 1; }
+  .session-title { margin: 0; font-size: 22px; font-weight: 600; }
+  .session-time {
+    margin-left: auto;
+    background: rgba(0,0,0,0.06);
+    padding: 4px 12px;
+    border-radius: 50px;
+    font-size: 12px;
+    color: var(--muted);
+    font-weight: 500;
+  }
+
+  .steps { display: flex; flex-direction: column; gap: 14px; }
+  .step {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 16px;
+    transition: box-shadow 0.2s;
+  }
+  .step:hover { box-shadow: 0 6px 18px rgba(63,138,163,0.10); }
+  .step.morning-step { border-left: 4px solid var(--sun); }
+  .step.midday-step { border-left: 4px solid var(--sea); }
+  .step.evening-step { border-left: 4px solid #8a7cc9; }
+  .step.optional { opacity: 0.94; border-left-style: dashed; }
+
+  .step-top { display: flex; gap: 14px; align-items: flex-start; }
+  .step-number {
+    flex-shrink: 0;
+    width: 32px; height: 32px;
+    background: var(--sea);
+    color: white;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 700; font-size: 14px;
+  }
+  .step.morning-step .step-number { background: var(--sun); }
+  .step.midday-step .step-number { background: var(--sea); }
+  .step.evening-step .step-number { background: #8a7cc9; }
+  .step.optional .step-number { background: #aaa; }
+
+  .product-img {
+    flex-shrink: 0;
+    width: 75px; height: 75px;
+    background: #fafafa;
+    border-radius: 10px;
+    object-fit: contain;
+    border: 1px solid var(--border);
+    padding: 4px;
+  }
+  .step-info { flex: 1; min-width: 0; }
+  .step-category { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.6px; font-weight: 600; margin: 0; }
+  .product-name { margin: 2px 0 2px 0; font-size: 16px; font-weight: 600; line-height: 1.3; }
+  .product-sub { margin: 0; font-size: 12px; color: var(--muted); }
+  .badge-row { margin-top: 6px; display: flex; gap: 4px; flex-wrap: wrap; }
+  .badge { display: inline-block; padding: 2px 8px; border-radius: 12px; font-size: 10px; font-weight: 700; letter-spacing: 0.3px; }
+  .badge.optional { background: #e1e3e5; color: #5a6675; }
+  .badge.spf { background: #ffe9c6; color: #8a5400; }
+  .badge.warning { background: #ffdde0; color: #8a2c33; }
+  .badge.skip { background: #e1e3e5; color: #5a6675; text-decoration: line-through; }
+
+  .instructions {
+    margin-top: 14px;
+    padding: 14px;
+    background: #f6fbfd;
+    border-radius: 10px;
+    display: grid;
+    gap: 8px;
+  }
+  .instr { display: flex; gap: 10px; font-size: 13px; align-items: flex-start; }
+  .instr-icon { flex-shrink: 0; width: 22px; text-align: center; font-size: 16px; }
+  .instr-text { flex: 1; }
+  .instr-text .lbl {
+    color: var(--muted);
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 11px;
+    letter-spacing: 0.4px;
+    margin-right: 4px;
+  }
+
+  .note {
+    background: var(--warning);
+    color: var(--warning-text);
+    padding: 12px 16px;
+    border-radius: 12px;
+    margin-top: 16px;
+    font-size: 13px;
+    border-left: 4px solid var(--sun);
+  }
+  .note.success { background: var(--success); color: var(--success-text); border-left-color: #5aa55a; }
+  .note.urgent { background: var(--urgent); color: var(--urgent-text); border-left-color: var(--coral-dark); }
+  .note.info { background: var(--info); color: var(--info-text); border-left-color: #4a7eb5; }
+
+  .section-title {
+    margin: 40px 0 16px;
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--sea-dark);
+    border-bottom: 2px solid var(--border);
+    padding-bottom: 8px;
+  }
+
+  .info-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 16px;
+  }
+  .info-card {
+    background: var(--card);
+    padding: 18px;
+    border-radius: 14px;
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow);
+  }
+  .info-card h3 {
+    margin: 0 0 12px 0;
+    font-size: 16px;
+    color: var(--sea-dark);
+    display: flex; align-items: center; gap: 8px;
+  }
+  .info-card ul { margin: 0; padding-left: 20px; font-size: 14px; }
+  .info-card li { margin-bottom: 6px; }
+
+  .checklist { list-style: none; padding: 0; margin: 0; }
+  .checklist li {
+    padding: 10px 0;
+    border-bottom: 1px solid var(--border);
+    display: flex; gap: 12px; align-items: flex-start;
+  }
+  .checklist li:last-child { border-bottom: none; }
+  .checklist .check-icon { flex-shrink: 0; font-size: 18px; line-height: 1.5; }
+  .checklist .check-content { flex: 1; }
+  .checklist .check-title { font-weight: 600; }
+  .checklist .check-desc { color: var(--muted); font-size: 13px; margin-top: 2px; }
+
+  footer { text-align: center; color: var(--muted); font-size: 12px; padding: 24px 16px; }
+
+  @media (max-width: 600px) {
+    header h1 { font-size: 22px; }
+    .panel-title { font-size: 24px; }
+    nav.sections { padding: 8px; }
+    nav.sections button { padding: 8px 10px; min-width: 64px; font-size: 12px; }
+    .session { padding: 16px; }
+    .product-img { width: 60px; height: 60px; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>🌊 Skincare Mare</h1>
+  <p><strong>Mara</strong> · routine semplificata coi prodotti che hai</p>
+  <span class="date-banner">5 luglio → 5 agosto 2026 · 30 giorni</span>
+</header>
+
+<nav class="sections" id="sec-nav">
+  <button data-sec="alerta" class="active">⚠️<span class="label">Leggi prima</span></button>
+  <button data-sec="mattino">☀️<span class="label">Mattino</span></button>
+  <button data-sec="rientro">🌊<span class="label">Rientro</span></button>
+  <button data-sec="sera">🌙<span class="label">Sera</span></button>
+  <button data-sec="valigia">🧳<span class="label">Valigia</span></button>
+  <button data-sec="regole">📋<span class="label">Regole</span></button>
+</nav>
+
+<main>
+
+<!-- ============ ALERTA ============ -->
+<section class="panel active" id="sec-alerta">
+  <h2 class="panel-title">⚠️ Le 2 cose da fare PRIMA</h2>
+  <p class="panel-subtitle">Da fare entro fine giugno · Niente acquisti obbligatori</p>
+
+  <div class="info-grid">
+    <div class="info-card" style="border-top: 4px solid var(--coral);">
+      <h3>1️⃣ Telefonata alla Dott.ssa Mordente</h3>
+      <p style="margin-top:0">Una settimana prima. Le domande pronte:</p>
+      <ul>
+        <li>Confermi di <strong>sospendere Epiduo</strong> per i 30 giorni di mare?</li>
+        <li>Confermi che riprendo <strong>Bassado a settembre</strong>? (l'avevi già detto a te stessa: bene 👍)</li>
+        <li>Continuo l'<strong>integratore Lamuselab</strong> capsule come da prescrizione?</li>
+        <li>Continuo il <strong>tonico Eucerin</strong> tutte le sere? (lo confermerà — gli AHA prevengono l'acne rebound dal sole)</li>
+        <li>Controllo al rientro: <strong>quando lo prendiamo</strong>?</li>
+      </ul>
+      <p style="font-size:12px;color:var(--muted);margin-bottom:0">⚠️ Non sospendere Epiduo prima della sua conferma — anche se è prassi standard.</p>
+    </div>
+
+    <div class="info-card" style="border-top: 4px solid var(--sea);">
+      <h3>2️⃣ Capisci il "perché" di questa routine</h3>
+      <ul>
+        <li><strong>STOP Epiduo</strong>: retinoide + sole = ustioni gravi + macchie scure permanenti</li>
+        <li><strong>STOP Bassado</strong>: doxiciclina + sole = reazioni fototossiche. Hai fatto bene a programmarlo a settembre!</li>
+        <li><strong>Mattino sintetico</strong>: hai ragione, era spreco. 4 step bastano</li>
+        <li><strong>Tonico Eucerin la sera</strong> diventa il TRUE "trattamento" del mese: gli AHA prevengono l'effetto rebound (pori che si chiudono dopo settimane di sole = brufoli al rientro)</li>
+        <li><strong>Doppia detersione</strong>: la sera fai Avène + Lamuselab in sequenza. Non è perfetta come col balm dedicato ma è efficace</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="note info">
+    💡 <strong>Buona notizia</strong>: questa dashboard usa SOLO i prodotti che hai già a casa. Zero acquisti obbligatori. Più sotto ti suggerisco 1-2 cose <em>opzionali</em> low-cost (totale ~€15) se vuoi ottimizzare di più, ma puoi anche partire così.
+  </div>
+
+  <div class="note urgent">
+    ☀️ <strong>Importante sul tuo Lamuselab Sun Control</strong>: è ottimo per pelle acneica ma NON è esplicitamente "water-resistant". Significa che lo dovrai <strong>riapplicare più spesso del solito</strong>: ogni ora di sole + SEMPRE dopo bagno/sudore (dettagli nella sezione mattino).
+  </div>
+</section>
+
+<!-- ============ MATTINO ============ -->
+<section class="panel" id="sec-mattino">
+  <h2 class="panel-title">☀️ Mattino — versione mare</h2>
+  <p class="panel-subtitle">4 step in 5 minuti · tutto il resto si fa la sera</p>
+
+  <div class="session morning">
+    <div class="session-header">
+      <span class="session-icon">☀️</span>
+      <h3 class="session-title">Pre-spiaggia</h3>
+      <span class="session-time">~5 min</span>
+    </div>
+    <div class="steps">
+
+      <div class="step morning-step">
+        <div class="step-top">
+          <div class="step-number">1</div>
+          <img src="data:image/jpeg;base64,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" alt="Avène" class="product-img">
+          <div class="step-info">
+            <p class="step-category">Step 1 · Detersione veloce</p>
+            <p class="product-name">Avène Mousse Opacizzante</p>
+            <p class="product-sub">Solo detergente, no sapone</p>
+          </div>
+        </div>
+        <div class="instructions">
+          <div class="instr"><div class="instr-icon">📏</div><div class="instr-text"><span class="lbl">Quantità</span>1 pump</div></div>
+          <div class="instr"><div class="instr-icon">🤲</div><div class="instr-text"><span class="lbl">Come</span>Massaggio circolare 30 sec, risciacqua, tampona</div></div>
+          <div class="instr"><div class="instr-icon">💡</div><div class="instr-text"><span class="lbl">Pro tip</span>Niente sapone Lamuselab al mattino: lo risparmi per la sera</div></div>
+        </div>
+      </div>
+
+      <div class="step morning-step">
+        <div class="step-top">
+          <div class="step-number">2</div>
+          <img src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBAUEBAYFBQUGBgYHCQ4JCQgICRINDQoOFRIWFhUSFBQXGiEcFxgfGRQUHScdHyIjJSUlFhwpLCgkKyEkJST/2wBDAQYGBgkICREJCREkGBQYJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCT/wAARCADcANwDASIAAhEBAxEB/8QAHAABAAICAwEAAAAAAAAAAAAAAAQFBgcBAwgC/8QAThAAAQMDAwEDBQsGCgoDAAAAAQACAwQFEQYSITETQVEHFCJhcRUyM3KBkZKhscHRCBYjQlJiFyQ0U1RWc4KTsyY1NkZjZJSisuFDdPD/xAAbAQEAAwEBAQEAAAAAAAAAAAAAAgMEAQUGB//EADARAAIBAwIDBgUEAwAAAAAAAAABAgMEESExBRJBUYGRobHwExQyYXEGIjM0weHx/9oADAMBAAIRAxEAPwD1SiIgCIiAIiIAiIgCIiAIiIAiIgOk1tM3OZ4hjr6Y4XAr6Vxw2oiPseCqGo0rb7lJFNUgvkiLix3Qsz1xgriXRNrmY6OTtHMeMEbiOM56g57ggMg89p+6eP6SjVt/tVujElZcKWnYejpZA0fOqN+gLLI0h7JHA7SfTdzhwcP1vEBaf1rrGfTmorjaKuwUMoY7aHGaUCWMj0TgHAyD3d+VptrWVeXLTMt3d07aPNUN1/n/AKS79S2b/rGfih1/pIddTWb/AKyP8V5vrNeUNfTsgl0laA2JoaxzXPD2AdMO/FY9U3apmkDoppI42gBjHlshYPDcW5Pyr1YcElL6tPA8Wpx+Mfpw/E9g2u/Wq9h5tdxo64RkbzTzNk256ZweFYLz7+Tc9zNRXuMPJEtNHI7gDLg88/WV6CXlXlv8vVdPOx7FjdfM0VVxuERFmNgREQBERAEREAREQBERAF1SVlPE8sknjY4dQ5wBXaoM1EyepkcQCePsQHf59S/0iL6QTz+l/pEX0go/uVH+yE9yov2WoCR59S/0iL6QXPn1L/SIvpBRfcmP9kLkWmL9kICT55TEZ7eP6QX1FUwz7uylY/b12nOFF9zImtPAXTZ4hFJVgDA3j7EB20/vV3rHdRaqptL0tO59NU11bWzCmoqGlaDLUy4J2tyQAAASXEgADJXVZdUXqquQob1pKttDXxuljqm1MVTT4b1a97MbHeGRg84K7hnMoyb5Fpz8oXS/b0VFqSCP06c+bVJH7Djljj7HZH95bPo9VWC4U81RR3y11MMD2xyyQ1Ub2xuccNDiDwSeB4qq1Ff9H3i3Vdir9SWRnnjH0xY+tiDg7ODgbvfNdjjxC0WlZ0KsaiMt7bq4oyp9p5RJ7lwrrUWlqvTYpvOZGydt2rHFrSOzljeWvYfWOD6w4Fc1ekbpT01LLFS1FU+WlbVysggc7zZjslm8gYyWjdjuBC+2jcU5JNPRn5+7epFtNbbmwvyb/wDaW7f/AE2/5i9CLz5+TdzqS7n/AJJv+YvQa+S4v/al3eh9rwRYtI9/qERF5p6wREQBERAEREAREQBERAFWXe90GnoZq651UdLSsDd0smcAk4HT14VmteeXNp/MC4YPUxfVK38VbRgqlSMH1ZTcVHTpSmt0i1b5WdEH/eSg+d34L6/hW0T/AFkt/wBM/gvJzXHxKtdO2OfUVxbRxTxU7WsdNNPKfQgiaMue72Du719FPglCCcnN4X4Pl4fqC4nJRjBZf5PTn8K2if6yW/6Z/BP4V9E/1koPpH8FoSbQlvqrjaKOzXx1S26000lPNUU5iEkrHFojAzkbi04JWFu3AkOyCOCD3FQpcHt6v0zfv/hKtx25pfVBe+/7nqx/lZ0SAf8ASSh+d34LIrZtdFJK0giR+4Ed4wMLxhz0z14Xs+ztxbKf1xtP1BYOJ2ELXl5G3k9PhPEql5zc6SxjYwnWtJcKS9ad1TQ2+oukdnkqI6qjpm7pnQzsDTJG39ZzC1p29SCccqo1zqCs1/pO52XTFkv0r5IBJNUVFC+mjLWSMc6ACXaXve0ObtHHcSMrYEtvpri1jaljnhhJbh7m9eO4hfB09bnOJdFK442kmeQnGMftLzVJHrOLNG6k05PqmhqZaNt4qZI6SGklig0263NMbqqD9G453OczaXDaCG4cchZLqqgkprleNOttlTbbRFStjtVHa9Px1bK8Oj/SbpHMcGu3ZbtJZxhxJzxs1+nrdJjdDKQOg7eQY/7vUuPzdtwGBFMB1wKiTr9Jd5znIahq9LQfmfpyLUcj6CGooKSpmfUZa+Ophja2aM55DpIeMH9aNV8mpIdUU9suNKyFlRSySPmidePMfNndplj9uPTbsDBkZI24wtta30jDqPR1dZoWYkLTNTbiTtmadzeT4nI+VeUHtLHFr2bXDILXDlp7wvc4bSjc02m9U/U+a4tN21VYWkv8G7PIXVsr9fanrI44ImTx9oGQEmMZlPvSQDjw4C3qvPv5Nv8AtBeD/wApH/mL0EsHFY8tw19l6Hq8GlzWsX936hEReceoEREAREQBERAEREAREQArAfLc3Ogaz1yRj/vH4LPlgXlw48ndc79mWD/NaPvV9r/NH8oz3X8M/wAM8vO9B+M4wVsLyfUFme5j4rvC+oq6aWjr7ZVHsHyMf1MEp9EkYaQDjosCq48S5Her6x6Cu95oG3KXza3Wo8+fXCURQkfu55d07gvs7tRlTxKXKfCW6lCt+2PNj37yZzeTYtBmzSzOu9TcbPDK2ip6ijMDHyPe5zXvf70hu7o0nOFqZ73PcXOOXEkk+JK3hpC1VzLU+22plfqellbtM12b2Fsi9cbXgyPx+7gK30v5CLDbHCe8ym7VI5MRGyBp+KDk/KfkXlUOIUrZS522/Xu6d56lbhta6cfhpJenf17jSGmtJXrVNSI7TQS1DWn0pcbY2fGeeB9q9dW2MxW+mjdjc2JrTjxwullPBQ0nY00McEMbcNjjaGtb7AFMibthY3waAvJvr+V002sJHu8N4dGzi0nlsgQLuWM6oudytjLf7n5AmqTHO8Q9psZsJzjBxyB3LotWsrlcrjBTGxvjp5TKw1IkLmh0ZLXEYGCNzT38ggrIqUmso1yuIRlysy1Fr2g1xqWipA+62V8ziDI5+wwhjRE15HAI6k47wGkHkLvGv7vO2IRafqPSb2hexkha4bwONzBkFvfwQVJ28yHzlPrnwM7Xmbyz6Y/N3WU08LNtJch51HjoHZw9v0uf7y9IW2aoqaCCerhZDPIwPdGxxIZnnGSAc/IsM8s+l/zj0bPPCzdV20+dRYHJaB6bfo8/3QtXDLj4Fwm9nozLxW2+Ytnjdaowb8m3/X15P/KR/wDmV6BXn78m3/X167/4rF/5legVLi/9qXd6EeCf1I9/qERF5p6wREQBERAEREAREQBERAFiXlXtVTevJ/eKKjgdPUvja6ONnVzmva7A+ZZauiubvo5h+4VKEnGSkuhGcFOLi+p59svkJvl22SXWpgtcXUtH6WX5gcD5Ssh1jo2i0Npy1QWRxlu1dcaW00twuP8AGPMu1ed0kcbvQBABwAOpW1qY5jb7AsG8ttzFi0dT3kT0cUluuVLVxsqow4TlriTG0lp2Pc3dtd3HvGVsq31as0pPTsMVLh1CjmSWvaa/r7bqyk01q69s8o+qHDTVykgdA6WIdvBE2Nz+Qz0XkOcW93vRjvW6rFIJbxdntB2vED2uc3BcDH3rTdw1L5EdXXR19rdUXGhNe6KattRfPFBVSMxtM0QaQ4jAHBwcDqtxWiVsl/vYa7cGmDnPcY8gAd3/ALWae2pqj9i1q3YgI8eFO6BV1VyYm/tPaPrVj3KotMS1DR3CsbRih7V0bJnOmjiqjTueC0hp3jua7Bx3+B6KrdSa5pmtbT1NM9hgcSwCJu2QudgD0egG0jg/rA9ci9uMr4hCWVUtOS8/Bw9rv46EdwUMXKpaG/x6eU8EtFBzg88/OFdCTSMtSMXLd5IttpdZvqqeS41dO+AuaKiANjLS3gO7s9Mnr1x3LLRx4qipqqoqJjDHcagPe7Le0osbe8gnjPHCmikuGwB1zy4biSIQMkjj5B9ajN5euhKliK0yywJx05Q7XtLXAFpGC094VcykuTWuDrlvJGAewaAOevzL7hgro6hr5K8SxDqwwgE9e9Rx9y3L2wa88lmmTpLykaptgaRAIIpacnvic8lvzcj5Ft5VtNQ05uprxGBUmDsC/wAWbtwHzk/OrJWV6zqy55b4Xkiq2oKhDkW2X5vIREVJoCIiAIiIAiIgCIiAIiIAviZu+F7fFpH1L7Q8hAVFC/NOw/urF/KlebhatO0cFsqoqGqulyprY2ukYHijEriDLg8ZAGBnjJCyOgOIQ3wyPrWKur4fKDqLU2jq6z09Vpy3wxU9VPJIQ+Srdh+xgHQNbtO7IIdjC7HfJGWxg1ZHcdFad8ojqPUdynqNPVtHU09RcJGzPmPYxvdC7Ixte5xGGgdQtt2U77tdZtr2OlMBcx36p7POB8+FqvVnk3s3k3ig1ZM696kt9NXwT19Ncri6RkMYwxs4YAO1dH6GN5OAFtOzyslv16cwRnLoMvHV/wCj4J8RgqybysohBY0ZazDM9MP+IrDuUEjNXT+ouP1KcOiqLTGboT2ceBU53nmCYRkes5PPsUaNtRgQht1k3gPDhVM9HBPHs6DvXZd7abl5uzzOjqmxyue4VJPoeiQC3HfnGfVlQY7HVOY2F1ms7YgMYE8nGXAk9PFoOOqtjjBlqKXM8Is6Oje9r+3luUAGWgTVAO7II4x/+6Lu9y27Q0XCu2jOMTc9w6+rH2qkj03IGvJs1p3bfQAqJffZHU9wxnp6lLotOQODxX26iYGNEcIhke7DMc5yeuUeO0Rzty+pPFpZjZ7o127nH8Y5HsU9rdrQ3JOABk9Sqk6UsZxm3Q8dOXfirRjQxjWN4a0AAeoKEmuhfBNbok0nwx+L96lqJR/Cn4v3qWokwiIgCIiAIiIAiIgCIiAIiIAhRD0QFFSei+VvTEjh9ZWvqy9O8lOs73cbtR1kmmdQSx1nuhTQum8xqQwMeyVrQSGODWkOx4hZNcNTOs1+qKWot9Q+kJyKmJpd6Zd73H19V9s8oFidu3VFQwD3+6B2GjnOcZ44VkYS7NGUyqw7cMwfWOvKLytWmXRehRU3R102w11yFO9lNQU+4GRznOAy8gYDR3lbHs0borxdImiQRRCCOPcONoZ3HvUQa8sEUcZ7eVkUmS0iBwBIAJAGO4HlJvKBaI2yBja2R8Zc0s7Atw4fqkngcrrjLGEjiqw3cjImc10Q8GuKnqjsN0beJBVNp54Ghr2hszdrjgjnHgrxVtY0Zcmmsow7VLL9Jbi3TskMdZ2nJk/ZWI9h5WMj9PQgZHf3d62OzO53tK7comGjXHYeVHfxUUxbt6EjIdj7MrgQeVLdLmopNpz2YBGRzxn5FsjKZKZOcprPzfyr8ZqKE+OMBZRo2PVbI6j85pKd7sjs+ywskynejeTqRIo/hT8X71LUOjP6U/F+9TFw6EREAREQBERAEREAREQBERAEPREQGLXamqar3QpaSqNJNI7AmAJLM4yRz1x0VBt1DDUtpaKtsOxuRJiNoEZznBBGcnn1eJ5WR3GkZPeJ3OdKxzduHRvLTy0eC+HWaPtGOdWzkuONsmx3afO3J71bCaSwZ61NzKvsNRdk5pr7C0hpMbhGzAO04BGOOcDI7h4ruoaXUNRO17b7bXMD2ulZBC0nbnkAgcZx3qWzTUO0FlQ7AABIgiOSOMn0fnClQWNkLjtrKtgJyQxzWZ9uGhSc9P8ARCNKSfXxLSm9KueTniP71NVfbomw1EkbC8hjAMucXHqe8qwKoNZj1ZdKG1gS11VFTMe/Y10jsZPgpXbwkEiaIgdTvHCx/UpYKi3bBXms7eTsPMuz3kbD2me09HG35c4wsXnotDMcyU11Q8wxFpjZTk9rteX7j6ODu3YyeHZHgr4UlJdTLUruEmtPHBsgTRuIDZY3E5wA4HOOq+srXdDS6Qt9dR1MF0rIzRvEzYBAduWx4c4gM6ANO4jjLSD0WUt1nY3xyvjrHO7KGSdzTE9rg1gJcOQPSw0naecc9FGVJrYlTuFL6ml3l3lM+pUNPrO2S9oydtTS1ETxHJTuhdI9jiQGglmRl2RgZyeeOCu61aqt14qRS05lbPmXcyRhaW7HYzz1B7iFF05LoTVaD2ZkFFzK74v3qaoVF8K74v3qaoFoREQBERAEREAREQBERAEREAREQGN3aV9NXVs7InSuZCJBGOryGnj5cLErpqS23MUxucNfbpomubhkQcQXDLsF3II2j0hyMnpyVk2pqAXGqlpjJ2e4RSZIJB2knBAIyDjxCpJqS6sl2t1XB20BcQyaMZaMcjoT0PPdx6lfS5epmr8z0WxUPq7G1rHsuuowJy+SMMyNrS45IBPQEkcjnCyqx6ipg+ktDKe4vkYTAZJW52loOS859XX5s4USL3RdHUR3DUtvbmF0cToNrHNkPIcTjPHgPvX1brfdqyLZHqwTxMPJhZlwGeATnvAIOVObi1r78imkpRei9+Jl9Cd1TOfU371NUG3HM9SfW0fUVOWU3mvNe1D6empCy1wXHM73FksZeGBrHOzwRjpgnnjPB6KhOpbFSCqjfpaJ748uf2fRx3A4xg4B4wTwSMcLPquepp3B1PTibLjuHaBpA9WV1wV04e8i3CGR4DpHdszLiMDnHJ4zg/urTCpiOMeZjq08zbUvLJhdTfLZQRdpTaSYJquOfsw5x9JgDmHf6PAcGuyAc8g96ksvNup65lQdMxR+dMexr853NL3tduOMZdtOG453AZGVlbbjcHDDbTMDxyZ2Y+pfZr69uS23PcPR4EzQTkZPzHhPidMeZFUnvnyKbTtusV+tEVW2wRUbSXMEbzl2A4HOQc9fHkEEK7prLbqOoFRTUUEUwaWB7W4IaTkj5yV20088z3iakfAGgYcZA7d8ykKmUnk0wpxSWmv4JFF8K74v3qaoVD8K74v3qaoFoREQBERAEREAREQBERAEREAREQFDdRi758YW/aVXVdLcaotxJCxrd2CyRzSR3Z4OVY309lcYZXHa10W3J6ZB/wDa4ZKx4GHNPsK6ngjKKloypjtFwa4PIbkcjdVZ+f0Fa2uKshjEVQ2naxjdrSx7nOdz1JIHcpIcMZyEE0ber2j2lSc29CMaSi8okWv4SpP7w+xT1X2g72TSD3rpOD44ACsFAsMSu5jBiMjqMem8Yqc+kCCCG478fUq1klukbtkNl4ydw34HTH3/AFKxvHaAxujmqonNdIQ6Cn7X9UnkH2ceJVaaupeXMZNd2ODGvLzb2kOxnOAeMnw9SuhsZaj/AHEqG7SU7I4GVVoiEbQCxu/DOMgD1YXcy8TOlMJqrUZi7YGNc/327GCfH71Vvnq5WEtrL2zJGALYzI7wOngOqm0cVZXPkfDcq2la12dktBGzGcnDSRzjxXXFYyyMZSeiLIG7emM0HHvCQ7n2+HcpVM6pw7zoQ5z6PZZxjA659eVBpqCviqGSTXeaeNvWIwtaHe0hWO44VLNEM7slUBBmf8Ufapyr7f8ADP8Aij7VYLhYEREAREQBERAEREAREQBERAEREBVXj+U048Q77l0+awPGXQxOPxQu28/ymm9jvuRnvQgOsUFJ/RovoqRFTwxtJZDG0+IaFwOi7GH0SgPu2fAP/tHKYoVpOad/9o5TUBhuoLxNZabt4aU1DnSFpGSA3vycLD2eVi7vy381KppAyNxOCfb3LYbT6bx+8ftX3hdRxmuG+Va8O2j806sBxxz+r6yuB5VruWuP5p1Y2nAaScu9nPqWyMLldyuw5h9prX+Fm7j/AHRrPr+ZZbpTUlTqKnfLUW6SjLQCA7PGc+ic96vcplceOh1Il27mV/xR9qsFX234WT4o+1WC4dCIiAIiIAiIgCIiAIiIAiIgCIiAqL2cVVJ7H/cjPehcXz+VUf8Af+5cxnLUB2fqr6Z7x3sXxnjC5DsMKA7rR/J3/wBo5TVBs5zTOP8AxHfapyAx9jv0j/jH7V2ZXSzO93xj9q7Mn1IDlFxkplAcouMplATbZ8JJ8UfarFV1r+Ek9g+1WKAIiIAiIgCIiAIiIAiIgCIiAIiICmv/APKKP+/9yRHAU2525txhDC90cjDuZI3ktPs7x6lRy0OoKY4jjpapo6ESbCfkI+9AWa4ecMd7FUZ1P0Fqj+WoYu+G23+rOKmSmpIz12OMj/sAQFrYjmjd/av+1WK6aSljoqdkEQO1gxyck+sruKAx1nv3/GP2rsXS0PZI4GKb3x/+N3j7F973fzU3+G78EB9ovne7+Zm/w3fgm938zN/hu/BAfSL53u/mZv8ADd+Cb3fzM3+G78EBPtfwknsH3qxVdadxdK4se0YA9JpHj4qxQBERAEREAREQBERAEREAREQBERAEREAREQBERAMJhEQDCYREAwmERAEREAREQBERAEREB//Z" alt="CeraVe" class="product-img">
+          <div class="step-info">
+            <p class="step-category">Step 2 · Contorno occhi</p>
+            <p class="product-name">CeraVe Crema Contorno Occhi</p>
+            <p class="product-sub">Sempre, anche al mare</p>
+          </div>
+        </div>
+        <div class="instructions">
+          <div class="instr"><div class="instr-icon">🤲</div><div class="instr-text"><span class="lbl">Come</span>Grano di riso, picchietta con l'anulare</div></div>
+        </div>
+      </div>
+
+      <div class="step morning-step">
+        <div class="step-top">
+          <div class="step-number">3</div>
+          <img src="data:image/jpeg;base64,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" alt="ISDIN labbra" class="product-img">
+          <div class="step-info">
+            <p class="step-category">Step 3 · Labbra</p>
+            <p class="product-name">ISDIN Nutrabalm Riparatore Labbra</p>
+            <p class="product-sub">Lo stesso stick di sempre (no SPF)</p>
+            <div class="badge-row"><span class="badge warning">NO SPF</span></div>
+          </div>
+        </div>
+        <div class="instructions">
+          <div class="instr"><div class="instr-icon">🤲</div><div class="instr-text"><span class="lbl">Come</span>Stendi sullo stick, riapplica spesso</div></div>
+          <div class="instr"><div class="instr-icon">💡</div><div class="instr-text"><span class="lbl">Workaround</span>Il tuo Nutrabalm NON ha SPF. Soluzione pratica: dopo l'SPF viso, stendi un velo di crema solare anche sul contorno labbra (evitando il rosa interno)</div></div>
+          <div class="instr"><div class="instr-icon">💰</div><div class="instr-text"><span class="lbl">OPZIONALE (€6-10)</span>Se vuoi una protezione vera, in qualsiasi farmacia trovi uno stick labbra SPF 50 (es. ISDIN Protector Labial, Avène SPF labial). Pratico ma non obbligatorio</div></div>
+        </div>
+      </div>
+
+      <div class="step morning-step">
+        <div class="step-top">
+          <div class="step-number">4</div>
+          <img src="data:image/jpeg;base64,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" alt="Lamuselab Sun Control" class="product-img">
+          <div class="step-info">
+            <p class="step-category">Step 4 · PROTEZIONE SOLARE</p>
+            <p class="product-name">LAMUSELAB Sun Skin Control SPF 50+</p>
+            <p class="product-sub">Crema viso 50 ml · Quella che hai già</p>
+            <div class="badge-row"><span class="badge spf">SPF 50+</span><span class="badge warning">Non water-resistant</span></div>
+          </div>
+        </div>
+        <div class="instructions">
+          <div class="instr"><div class="instr-icon">📏</div><div class="instr-text"><span class="lbl">Quantità</span><strong>Regola 2 dita</strong>: due strisce di crema su indice + medio</div></div>
+          <div class="instr"><div class="instr-icon">🤲</div><div class="instr-text"><span class="lbl">Come</span>Stendi uniforme su viso, collo, <strong>orecchie</strong>, décolleté</div></div>
+          <div class="instr"><div class="instr-icon">⏱️</div><div class="instr-text"><span class="lbl">Attendi</span>15-20 min prima di uscire al sole</div></div>
+          <div class="instr"><div class="instr-icon">🔁</div><div class="instr-text"><span class="lbl">RIAPPLICA</span><strong>Ogni 1h</strong> di sole + <strong>SUBITO dopo ogni bagno e asciugatura</strong> (questo solare non è specifico per acqua, va riapplicato più spesso). Imposta timer sul telefono</div></div>
+          <div class="instr"><div class="instr-icon">💡</div><div class="instr-text"><span class="lbl">Pro tip</span>Hai il <strong>Lamuselab Sun Control SPRAY</strong> per il corpo? Bene: usalo per le spalle/braccia e per le ricoperture rapide. Sul viso usa la crema</div></div>
+        </div>
+      </div>
+
+    </div>
+    <div class="note urgent">
+      🧴 <strong>FERMATI QUI</strong>. Niente Caudalie, niente acqua termale, niente altro. Sarebbero sprecati prima del bagno.
+    </div>
+    <div class="note info">
+      🎩 <strong>Cappello + occhiali da sole</strong> = -70% di UV sul viso. Sono il "primo SPF". Cappello a tesa larga (non visiera): copre anche orecchie, tempie, collo.
+    </div>
+  </div>
+</section>
+
+<!-- ============ RIENTRO ============ -->
+<section class="panel" id="sec-rientro">
+  <h2 class="panel-title">🌊 Rientro dal mare</h2>
+  <p class="panel-subtitle">3 minuti dopo doccia, prima di riposare</p>
+
+  <div class="session midday">
+    <div class="session-header">
+      <span class="session-icon">🚿</span>
+      <h3 class="session-title">Dopo la doccia</h3>
+      <span class="session-time">~3 min</span>
+    </div>
+    <div class="steps">
+
+      <div class="step midday-step">
+        <div class="step-top">
+          <div class="step-number">1</div>
+          <img src="data:image/jpeg;base64,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" alt="Sapone Lamuselab" class="product-img">
+          <div class="step-info">
+            <p class="step-category">In doccia o subito dopo</p>
+            <p class="product-name">LAMUSELAB Mousse Lavante Viso</p>
+            <p class="product-sub">Solo viso, acqua dolce tiepida</p>
+          </div>
+        </div>
+        <div class="instructions">
+          <div class="instr"><div class="instr-icon">💧</div><div class="instr-text"><span class="lbl">Acqua</span>Tiepida, mai calda (peggiora il rossore)</div></div>
+          <div class="instr"><div class="instr-icon">🤲</div><div class="instr-text"><span class="lbl">Come</span>Una nocciolina, schiuma, massaggia 20 sec, risciacqua</div></div>
+          <div class="instr"><div class="instr-icon">💡</div><div class="instr-text"><span class="lbl">Perché</span>Rimuove sale + sabbia + parte dell'SPF. Risciacquare con sola acqua non basta</div></div>
+        </div>
+      </div>
+
+      <div class="step midday-step">
+        <div class="step-top">
+          <div class="step-number">2</div>
+          <img src="data:image/jpeg;base64,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" alt="Acqua termale" class="product-img">
+          <div class="step-info">
+            <p class="step-category">Subito dopo</p>
+            <p class="product-name">LAMUSELAB Acqua Termale</p>
+            <p class="product-sub">Spray rinfrescante e lenitivo</p>
+          </div>
+        </div>
+        <div class="instructions">
+          <div class="instr"><div class="instr-icon">🤲</div><div class="instr-text"><span class="lbl">Come</span>Spruzza generoso da 20 cm, tampona con le mani</div></div>
+          <div class="instr"><div class="instr-icon">💡</div><div class="instr-text"><span class="lbl">Pro tip</span><strong>Mettila in frigo</strong> nella casa al mare: effetto rinfrescante magico dopo il sole</div></div>
+          <div class="instr"><div class="instr-icon">✨</div><div class="instr-text"><span class="lbl">Lenitivo</span>Quest'acqua termale è già lenitiva. Su pelle leggermente arrossata basta da sola</div></div>
+        </div>
+      </div>
+
+      <div class="step midday-step">
+        <div class="step-top">
+          <div class="step-number">3</div>
+          <img src="data:image/jpeg;base64,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" alt="LRP Posthelios" class="product-img">
+          <div class="step-info">
+            <p class="step-category">Step 3 · Doposole riparatore</p>
+            <p class="product-name">La Roche-Posay Posthelios Gel Doposole</p>
+            <p class="product-sub">400 ml · Viso e corpo · Acqua termale LRP</p>
+            <div class="badge-row"><span class="badge spf">DERMO</span><span class="badge optional">~€18-22 (dura 6 mesi)</span></div>
+          </div>
+        </div>
+        <div class="instructions">
+          <div class="instr"><div class="instr-icon">🚿</div><div class="instr-text"><span class="lbl">Pelle</span>Pulita (dopo doccia + Lamuselab Mousse), tamponata</div></div>
+          <div class="instr"><div class="instr-icon">📏</div><div class="instr-text"><span class="lbl">Viso</span>Una nocciola di gel</div></div>
+          <div class="instr"><div class="instr-icon">📏</div><div class="instr-text"><span class="lbl">Corpo</span>Generoso su braccia, spalle, gambe, schiena, décolleté (le zone più esposte)</div></div>
+          <div class="instr"><div class="instr-icon">🤲</div><div class="instr-text"><span class="lbl">Come</span>Stendi con movimenti delicati. <strong>NON massaggiare forte</strong> (pelle sensibile dopo il sole)</div></div>
+          <div class="instr"><div class="instr-icon">⏱️</div><div class="instr-text"><span class="lbl">Assorbimento</span>1-2 minuti, texture gel acquosa = zero unto</div></div>
+          <div class="instr"><div class="instr-icon">🚫</div><div class="instr-text"><span class="lbl">Dopo</span>Stop. Niente altro. La pelle riposa fino alla sera</div></div>
+          <div class="instr"><div class="instr-icon">💡</div><div class="instr-text"><span class="lbl">Cosa ripara</span>Madecassoside (Centella asiatica) = ricostruisce barriera + acqua termale LRP lenitiva + glicerina idratante. Senza profumo, non comedogeno</div></div>
+          <div class="instr"><div class="instr-icon">❄️</div><div class="instr-text"><span class="lbl">Pro tip</span>Tienilo in frigo: effetto rinfrescante doppio + sensazione di sollievo immediato</div></div>
+        </div>
+      </div>
+
+    </div>
+    <div class="note success">
+      😴 <strong>Stop fino a sera.</strong> Lascia respirare la pelle. Niente creme, niente trucco. Se devi uscire la sera, fai la routine sera al posto del trucco diurno.
+    </div>
+  </div>
+</section>
+
+<!-- ============ SERA ============ -->
+<section class="panel" id="sec-sera">
+  <h2 class="panel-title">🌙 Sera — il momento del recupero</h2>
+  <p class="panel-subtitle">7 step · qui si gioca la prevenzione del rebound</p>
+
+  <div class="session evening">
+    <div class="session-header">
+      <span class="session-icon">🌙</span>
+      <h3 class="session-title">Routine completa</h3>
+      <span class="session-time">~10 min</span>
+    </div>
+    <div class="steps">
+
+      <div class="step evening-step">
+        <div class="step-top">
+          <div class="step-number">1</div>
+          <img src="data:image/jpeg;base64,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" alt="Avène" class="product-img">
+          <div class="step-info">
+            <p class="step-category">Step 1 · Doppia detersione — prima parte</p>
+            <p class="product-name">Avène Mousse Opacizzante</p>
+            <p class="product-sub">Primo passaggio: scioglie SPF + sebo + sudore</p>
+          </div>
+        </div>
+        <div class="instructions">
+          <div class="instr"><div class="instr-icon">🚿</div><div class="instr-text"><span class="lbl">Pelle</span>Bagna con acqua tiepida</div></div>
+          <div class="instr"><div class="instr-icon">📏</div><div class="instr-text"><span class="lbl">Quantità</span>1-2 pump abbondanti (oggi serve di più: hai SPF tutto il giorno)</div></div>
+          <div class="instr"><div class="instr-icon">🤲</div><div class="instr-text"><span class="lbl">Come</span>Massaggia <strong>60 sec ben pieni</strong> in movimenti circolari (più del solito!)</div></div>
+          <div class="instr"><div class="instr-icon">💧</div><div class="instr-text"><span class="lbl">Dopo</span>Risciacqua abbondante. Non asciugare: vai diretta al sapone</div></div>
+          <div class="instr"><div class="instr-icon">💡</div><div class="instr-text"><span class="lbl">Pro tip</span>Senza balm dedicato, dobbiamo lavorare di tempo: 60 sec di massaggio invece di 30. Fa la differenza per togliere l'SPF</div></div>
+        </div>
+      </div>
+
+      <div class="step evening-step">
+        <div class="step-top">
+          <div class="step-number">2</div>
+          <img src="data:image/jpeg;base64,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" alt="Sapone Lamuselab" class="product-img">
+          <div class="step-info">
+            <p class="step-category">Step 2 · Doppia detersione — seconda parte</p>
+            <p class="product-name">LAMUSELAB Mousse Lavante Viso</p>
+            <p class="product-sub">Sapone seboregolatore: pulizia profonda</p>
+          </div>
+        </div>
+        <div class="instructions">
+          <div class="instr"><div class="instr-icon">🚿</div><div class="instr-text"><span class="lbl">Pelle</span>Già bagnata dopo Avène</div></div>
+          <div class="instr"><div class="instr-icon">📏</div><div class="instr-text"><span class="lbl">Quantità</span>Una nocciolina</div></div>
+          <div class="instr"><div class="instr-icon">🤲</div><div class="instr-text"><span class="lbl">Come</span>Schiuma tra le mani, massaggia 30 sec, risciacqua bene</div></div>
+          <div class="instr"><div class="instr-icon">💡</div><div class="instr-text"><span class="lbl">Pro tip OPZIONALE</span>Se vuoi rendere ancora più efficace la doppia detersione (~€15 una volta sola): un <strong>balm struccante</strong> (Clinique, INKEY List, Cerave) sostituisce questo step 1+2. Vedi sezione "Valigia"</div></div>
+        </div>
+      </div>
+
+      <div class="step evening-step">
+        <div class="step-top">
+          <div class="step-number">3</div>
+          <img src="data:image/jpeg;base64,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" alt="Eucerin tonico" class="product-img">
+          <div class="step-info">
+            <p class="step-category">Step 3 · Tonico AHA — il VERO trattamento del mese</p>
+            <p class="product-name">Eucerin Dermopure Tonico Purificante</p>
+            <p class="product-sub">200 ml · AHA + PHA esfolianti</p>
+          </div>
+        </div>
+        <div class="instructions">
+          <div class="instr"><div class="instr-icon">🌵</div><div class="instr-text"><span class="lbl">Pelle</span>Asciutta</div></div>
+          <div class="instr"><div class="instr-icon">🤲</div><div class="instr-text"><span class="lbl">Come</span>Dischetto, passata unica su tutto il viso, no risciacquo</div></div>
+          <div class="instr"><div class="instr-icon">⏱️</div><div class="instr-text"><span class="lbl">Attendi</span>1-2 minuti che agisca</div></div>
+          <div class="instr"><div class="instr-icon">💡</div><div class="instr-text"><span class="lbl">Perché è cruciale</span>Il sole ispessisce lo strato corneo (difesa naturale) → chiude i pori → brufoli al rientro. Gli AHA del tonico esfoliano dolcemente e <strong>prevengono l'acne rebound</strong>. È il sostituto del retinoide dell'Epiduo (in versione mare-friendly)</div></div>
+          <div class="instr"><div class="instr-icon">⚠️</div><div class="instr-text"><span class="lbl">Eccezione</span>Se ti sei scottata (rossore vero), salta questo step per 2-3 sere finché la pelle si calma</div></div>
+        </div>
+      </div>
+
+      <div class="step evening-step">
+        <div class="step-top">
+          <div class="step-number">4</div>
+          <img src="data:image/jpeg;base64,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" alt="CeraVe" class="product-img">
+          <div class="step-info">
+            <p class="step-category">Step 4 · Contorno occhi</p>
+            <p class="product-name">CeraVe Crema Contorno Occhi</p>
+            <p class="product-sub">Picchietta con l'anulare</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="step evening-step">
+        <div class="step-top">
+          <div class="step-number">5</div>
+          <img src="data:image/jpeg;base64,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" alt="ISDIN labbra" class="product-img">
+          <div class="step-info">
+            <p class="step-category">Step 5 · Labbra</p>
+            <p class="product-name">ISDIN Nutrabalm Riparatore Labbra</p>
+            <p class="product-sub">La sera non serve SPF — solo riparatore</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="step evening-step">
+        <div class="step-top">
+          <div class="step-number">6</div>
+          <img src="data:image/jpeg;base64,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" alt="Siero Elisir" class="product-img">
+          <div class="step-info">
+            <p class="step-category">Step 6 · Trattamento sera (sostituisce Epiduo)</p>
+            <p class="product-name">LAMUSELAB Siero Elisir</p>
+            <p class="product-sub">Idratante, ricostituente, ricco di vitamine B</p>
+            <div class="badge-row"><span class="badge skip">EPIDUO SOSPESO</span></div>
+          </div>
+        </div>
+        <div class="instructions">
+          <div class="instr"><div class="instr-icon">📏</div><div class="instr-text"><span class="lbl">Quantità</span>3-4 gocce</div></div>
+          <div class="instr"><div class="instr-icon">🤲</div><div class="instr-text"><span class="lbl">Come</span>Picchietta su viso, collo, décolleté fino ad assorbimento</div></div>
+          <div class="instr"><div class="instr-icon">📅</div><div class="instr-text"><span class="lbl">Frequenza</span><strong>TUTTE le sere</strong> per i 30 giorni di mare (7 sere su 7). Durante l'anno normale lo usavi solo Mar+Sab, ma in questo mese sostituisce Epiduo e diventa il trattamento sera principale</div></div>
+          <div class="instr"><div class="instr-icon">💡</div><div class="instr-text"><span class="lbl">Perché</span>Le vitamine B (B3 niacinamide, B5 pantenolo, B9) riparano la barriera danneggiata dal sole, ripristinano idratazione e prevengono nuove imperfezioni</div></div>
+        </div>
+      </div>
+
+      <div class="step evening-step optional">
+        <div class="step-top">
+          <div class="step-number">7</div>
+          <img src="data:image/jpeg;base64,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" alt="Caudalie" class="product-img">
+          <div class="step-info">
+            <p class="step-category">Step 7 · OPZIONALE — solo se pelle tira/secca</p>
+            <p class="product-name">Caudalie Vinopure Fluido Effetto Mat</p>
+            <p class="product-sub">La crema che già hai · usala come "in più" se serve</p>
+            <div class="badge-row"><span class="badge optional">SOLO SE TIRA</span></div>
+          </div>
+        </div>
+        <div class="instructions">
+          <div class="instr"><div class="instr-icon">⏱️</div><div class="instr-text"><span class="lbl">Quando</span>Solo se senti la pelle tirare o disidratata, dopo il siero. Se è ok, salta</div></div>
+          <div class="instr"><div class="instr-icon">📏</div><div class="instr-text"><span class="lbl">Quantità</span>Un pisello, sottilmente</div></div>
+          <div class="instr"><div class="instr-icon">💡</div><div class="instr-text"><span class="lbl">Note</span>Questa è una "ri-funzionalizzazione" della Caudalie: invece di sprecarla la mattina, la usi la sera come livello extra di idratazione SOS</div></div>
+        </div>
+      </div>
+
+      <div class="step evening-step">
+        <div class="step-top">
+          <div class="step-number">8</div>
+          <img src="data:image/jpeg;base64,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" alt="Acqua termale" class="product-img">
+          <div class="step-info">
+            <p class="step-category">Step 8 · Finisher</p>
+            <p class="product-name">LAMUSELAB Acqua Termale</p>
+            <p class="product-sub">Chiusura della routine</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <div class="note urgent">
+      🚫 <strong>Niente Metal Mask</strong> per questo mese! Pelle già stressata + maschera peel-off = barriera distrutta. Riprendila a settembre.
+    </div>
+    <div class="note success">
+      ✅ <strong>Bassado a settembre</strong>: bene così, hai fatto bene a programmarlo dopo il mare. Lo riprenderai con il primo ciclo a settembre.
+    </div>
+  </div>
+</section>
+
+<!-- ============ VALIGIA ============ -->
+<section class="panel" id="sec-valigia">
+  <h2 class="panel-title">🧳 La tua valigia skincare</h2>
+  <p class="panel-subtitle">Tutto quello che hai già · zero acquisti obbligatori</p>
+
+  <h3 class="section-title">✅ Da PORTARE (li hai già tutti)</h3>
+  <ul class="checklist">
+    <li><span class="check-icon">✅</span><div class="check-content"><div class="check-title">Avène Mousse Opacizzante</div><div class="check-desc">Detersione mattino + sera (1° passaggio doppia detersione)</div></div></li>
+    <li><span class="check-icon">✅</span><div class="check-content"><div class="check-title">Lamuselab Mousse Lavante Viso</div><div class="check-desc">Detersione sera (2° passaggio) + dopo mare</div></div></li>
+    <li><span class="check-icon">✅</span><div class="check-content"><div class="check-title">Eucerin Dermopure Tonico</div><div class="check-desc">In aereo travasalo in flacone piccolo (50ml)</div></div></li>
+    <li><span class="check-icon">✅</span><div class="check-content"><div class="check-title">CeraVe Crema Contorno Occhi 15ml</div><div class="check-desc">Già piccolo, entra ovunque</div></div></li>
+    <li><span class="check-icon">✅</span><div class="check-content"><div class="check-title">ISDIN Nutrabalm Labbra</div><div class="check-desc">Mattina e sera</div></div></li>
+    <li><span class="check-icon">✅</span><div class="check-content"><div class="check-title">Lamuselab Sun Skin Control SPF 50+ crema viso</div><div class="check-desc"><strong>SPF principale</strong>. Considera di portarne 2 — uno in valigia + uno in spiaggia. Costa €25-30, e finisce velocemente con riapplicazioni ogni ora</div></div></li>
+    <li><span class="check-icon">✅</span><div class="check-content"><div class="check-title">Lamuselab Sun Control spray corpo</div><div class="check-desc">Per corpo + ricoperture rapide</div></div></li>
+    <li><span class="check-icon">✅</span><div class="check-content"><div class="check-title">Lamuselab Siero Elisir</div><div class="check-desc">Diventa la crema sera principale (tutte le sere, non più 2/sett)</div></div></li>
+    <li><span class="check-icon">✅</span><div class="check-content"><div class="check-title">Lamuselab Acqua Termale</div><div class="check-desc">Max 100ml in cabina (se vai in aereo). Mettila in frigo al mare</div></div></li>
+    <li><span class="check-icon">✅</span><div class="check-content"><div class="check-title">Caudalie Vinopure Fluido</div><div class="check-desc">Portala come "SOS idratazione" sera (vedi step 7 sera)</div></div></li>
+    <li><span class="check-icon">✅</span><div class="check-content"><div class="check-title">Integratore Lamuselab capsule</div><div class="check-desc">Continua come da prescrizione (se sei in fase ON)</div></div></li>
+  </ul>
+
+  <h3 class="section-title">🆕 Da acquistare prima della partenza</h3>
+  <p style="color:var(--muted);font-size:13px">UN solo prodotto serio (dura mesi). Più un opzionale economico:</p>
+  <div class="info-grid">
+    <div class="info-card" style="border-top: 4px solid #4a7eb5;">
+      <h3>💧 La Roche-Posay Posthelios 400ml</h3>
+      <img src="data:image/jpeg;base64,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" alt="" style="width:100px;float:right;border-radius:8px;background:#fafafa;padding:6px;border:1px solid var(--border)">
+      <p style="margin:8px 0">Doposole gel viso+corpo. Step 3 ufficiale del rientro. Dura 6-8 mesi.</p>
+      <p style="margin:8px 0"><strong>€18-22</strong> · Farmasave / Farmacie / Amazon · da comprare prima della partenza</p>
+    </div>
+    <div class="info-card" style="border-top: 4px solid #c47e0c;">
+      <h3>💋 Stick labbra con SPF 50</h3>
+      <p style="margin:8px 0">Per protezione labbra giorno (il tuo Nutrabalm non ha SPF). Sostituisce il Nutrabalm SOLO al mattino.</p>
+      <p style="margin:8px 0"><strong>~€6-10</strong> · ISDIN Protector Labial, Avène SPF labial, La Roche-Posay Anthelios Lip · farmacia</p>
+    </div>
+  </div>
+
+  <h3 class="section-title">❌ Da LASCIARE a casa</h3>
+  <ul class="checklist">
+    <li><span class="check-icon">❌</span><div class="check-content"><div class="check-title">Epiduo gel 0,3%</div><div class="check-desc"><strong>SOSPESO</strong> per i 30 giorni (conferma con Dott.ssa Mordente)</div></div></li>
+    <li><span class="check-icon">❌</span><div class="check-content"><div class="check-title">Bassado 100 mg</div><div class="check-desc">Confermato: lo riprendi a settembre 👍</div></div></li>
+    <li><span class="check-icon">❌</span><div class="check-content"><div class="check-title">Lamuselab Metal Mask</div><div class="check-desc">Esfoliante troppo aggressivo con pelle stressata dal sole</div></div></li>
+  </ul>
+</section>
+
+<!-- ============ REGOLE ============ -->
+<section class="panel" id="sec-regole">
+  <h2 class="panel-title">📋 Le 10 regole d'oro</h2>
+  <p class="panel-subtitle">Da rileggere prima di ogni giornata di sole</p>
+
+  <div class="info-grid">
+    <div class="info-card">
+      <h3>1️⃣ SPF ogni ora (il tuo non è water-resistant)</h3>
+      <p style="margin:0;font-size:14px">Timer telefono ogni 60 min + sempre dopo bagno + dopo asciugatura. Il Lamuselab Sun Control è ottimo ma non per stare ore in acqua: dovrai ripassarlo spesso.</p>
+    </div>
+    <div class="info-card">
+      <h3>2️⃣ Cappello + occhiali</h3>
+      <p style="margin:0;font-size:14px">-70% UV sul viso. È il "primo SPF". A tesa larga, non visiera.</p>
+    </div>
+    <div class="info-card">
+      <h3>3️⃣ NO sole 12:00-15:00</h3>
+      <p style="margin:0;font-size:14px">Le 3 ore con i raggi più dannosi. Pranzo all'ombra, riposino, doccia. Riprendi alle 16:00.</p>
+    </div>
+    <div class="info-card">
+      <h3>4️⃣ Doppia detersione SACRA</h3>
+      <p style="margin:0;font-size:14px">Avène (60 sec!) + Sapone Lamuselab ogni sera. Saltarla = brufoli garantiti il giorno dopo. È il MIGLIOR investimento di 90 secondi della tua giornata.</p>
+    </div>
+    <div class="info-card">
+      <h3>5️⃣ Bevi 2L+ acqua/giorno</h3>
+      <p style="margin:0;font-size:14px">Sole + sale = disidratazione. Più bevi, meno la pelle si "ispessisce" e meno brufoli al rientro.</p>
+    </div>
+    <div class="info-card">
+      <h3>6️⃣ Niente alcol sotto il sole</h3>
+      <p style="margin:0;font-size:14px">Aperitivo solo la sera. Alcol al sole = vasodilatazione + eritema solare + disidratazione drammatica.</p>
+    </div>
+    <div class="info-card">
+      <h3>7️⃣ Niente profumi prima del sole</h3>
+      <p style="margin:0;font-size:14px">Profumi e oli essenziali (bergamotto soprattutto) lasciano macchie scure permanenti. Profumati solo la sera.</p>
+    </div>
+    <div class="info-card">
+      <h3>8️⃣ Brufolo? Acqua termale + freddo</h3>
+      <p style="margin:0;font-size:14px">Se esce un brufolo: acqua termale fredda + impacco ghiacciato (in panno). MAI Epiduo "extra", MAI spremere.</p>
+    </div>
+    <div class="info-card">
+      <h3>9️⃣ Federe e asciugamani PULITI</h3>
+      <p style="margin:0;font-size:14px">Salsedine + olio + sudore sulle federe = brufoli. Cambia federa ogni 2 giorni, asciugamano viso ogni giorno.</p>
+    </div>
+    <div class="info-card">
+      <h3>🔟 Non toccare la faccia</h3>
+      <p style="margin:0;font-size:14px">Sabbia, sale, olio, sudore sulle mani in spiaggia. Resisti alla tentazione. Tieni l'acqua termale a portata per "ritoccare" senza toccare.</p>
+    </div>
+  </div>
+
+  <h3 class="section-title">🆘 SOS: cosa fare se...</h3>
+  <div class="info-grid">
+    <div class="info-card" style="border-top:4px solid var(--coral)">
+      <h3>🔥 Mi sono scottata</h3>
+      <ul>
+        <li>Acqua fresca (no fredda) sul viso</li>
+        <li>Acqua termale Lamuselab dal frigo (lenitiva)</li>
+        <li>NIENTE tonico AHA per 2-3 sere (aspetta che la pelle si calmi)</li>
+        <li>NIENTE Caudalie (effetto mat secca di più)</li>
+        <li>Solo siero Elisir come crema</li>
+        <li>Stai all'ombra 2-3 giorni</li>
+        <li>Se vesciche o forte dolore → medico subito</li>
+      </ul>
+    </div>
+    <div class="info-card" style="border-top:4px solid var(--sea)">
+      <h3>😰 Mi sta uscendo un brufolone</h3>
+      <ul>
+        <li>Acqua termale fredda localmente</li>
+        <li>Impacco freddo 5 min, 3 volte al giorno</li>
+        <li>Detersione la sera ULTRA accurata (60+ sec di Avène)</li>
+        <li>NIENTE Epiduo "tampone" — peggiora</li>
+        <li>NIENTE spremere (lascia macchia post-mare permanente)</li>
+        <li>Tonico Eucerin la sera continua</li>
+      </ul>
+    </div>
+    <div class="info-card" style="border-top:4px solid var(--sun)">
+      <h3>😬 Pelle ispessita / punti neri verso fine vacanza</h3>
+      <ul>
+        <li>È l'effetto rebound che ti dicevo. È normale</li>
+        <li>Continua tonico Eucerin tutte le sere</li>
+        <li>NIENTE scrub abrasivi</li>
+        <li>Doppia detersione sacra</li>
+        <li>Si risolve al rientro in 2-3 settimane</li>
+        <li>A settembre riprenderai Epiduo + Bassado, perfetto per "ripulire"</li>
+      </ul>
+    </div>
+    <div class="info-card" style="border-top:4px solid #8a7cc9">
+      <h3>🌸 Macchia scura sul viso?</h3>
+      <ul>
+        <li>Stop sole immediato per quella zona</li>
+        <li>Cappello rigido + ombrellone</li>
+        <li>SPF generosissimo su quella zona</li>
+        <li>Telefonata alla Dott.ssa al rientro</li>
+        <li>Si trattano con peeling/laser in autunno-inverno</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="note urgent" style="margin-top:24px;font-size:14px">
+    📞 <strong>Numero della Dott.ssa Mordente</strong> — salvalo in rubrica prima di partire! Per dubbi o emergenze.
+  </div>
+</section>
+
+</main>
+
+<footer>
+  💗 Skincare Mare 2026 · Versione coi tuoi prodotti · 5 luglio → 5 agosto 2026<br>
+  Bassado a settembre · Epiduo da confermare con dottoressa
+</footer>
+
+<script>
+function setupNav() {
+  const nav = document.getElementById("sec-nav");
+  const buttons = nav.querySelectorAll("button");
+  const panels = document.querySelectorAll(".panel");
+  buttons.forEach(btn => {
+    btn.addEventListener("click", () => {
+      const sec = btn.dataset.sec;
+      buttons.forEach(b => b.classList.remove("active"));
+      btn.classList.add("active");
+      panels.forEach(p => p.classList.remove("active"));
+      const target = document.getElementById("sec-" + sec);
+      if (target) target.classList.add("active");
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    });
+  });
+}
+setupNav();
+</script>
+</body>
+</html>

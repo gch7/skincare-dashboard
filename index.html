@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<title>🌸 Skincare Dashboard</title>
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-title" content="Skincare" />
+<meta name="theme-color" content="#f3c8c8" />
+<style>
+  * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    margin: 0;
+    min-height: 100vh;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "SF Pro Display", Helvetica, Arial, sans-serif;
+    background: linear-gradient(160deg, #fdf7f4 0%, #f0f7fa 50%, #f5faf6 100%);
+    color: #2a2a2a;
+    line-height: 1.5;
+    display: flex;
+    flex-direction: column;
+    padding: calc(40px + env(safe-area-inset-top)) 20px calc(40px + env(safe-area-inset-bottom));
+    overscroll-behavior-y: contain;
+  }
+  .container {
+    max-width: 520px;
+    margin: 0 auto;
+    width: 100%;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  header { text-align: center; margin-bottom: 32px; }
+  h1 {
+    margin: 0 0 8px 0;
+    font-size: 36px;
+    font-weight: 700;
+    background: linear-gradient(135deg, #d4859e 0%, #7ec4d9 50%, #4f9c6b 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    letter-spacing: -1px;
+  }
+  header p { margin: 4px 0; color: #6c6c6c; font-size: 14px; }
+  .today-badge {
+    display: inline-block;
+    background: rgba(255,255,255,0.7);
+    padding: 6px 14px;
+    border-radius: 50px;
+    font-weight: 600;
+    margin-top: 12px;
+    font-size: 13px;
+    color: #444;
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(0,0,0,0.05);
+  }
+
+  .auto-banner {
+    background: linear-gradient(135deg, #fff7ed 0%, #fef3c7 100%);
+    padding: 14px 18px;
+    border-radius: 14px;
+    margin-bottom: 20px;
+    border-left: 4px solid #f59e0b;
+    font-size: 13px;
+    color: #92400e;
+    text-align: center;
+  }
+  .auto-banner strong { color: #78350f; }
+  .auto-banner a {
+    color: #b45309;
+    font-weight: 700;
+    text-decoration: underline;
+  }
+
+  .cards { display: flex; flex-direction: column; gap: 14px; }
+  .card {
+    display: block;
+    text-decoration: none;
+    color: inherit;
+    background: white;
+    padding: 22px;
+    border-radius: 18px;
+    border: 1px solid rgba(0,0,0,0.06);
+    box-shadow: 0 4px 14px rgba(0,0,0,0.04);
+    transition: transform 0.2s, box-shadow 0.2s;
+    position: relative;
+    overflow: hidden;
+  }
+  .card:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.08); }
+  .card.active::after {
+    content: "OGGI";
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    background: #4f9c6b;
+    color: white;
+    padding: 3px 10px;
+    border-radius: 50px;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+  }
+  .card-icon { font-size: 36px; line-height: 1; margin-bottom: 8px; }
+  .card-title { font-size: 20px; font-weight: 700; margin: 0 0 4px 0; }
+  .card-sub { font-size: 13px; color: #6c6c6c; margin: 0 0 10px 0; }
+  .card-period { font-size: 12px; color: #888; font-weight: 500; }
+
+  .card.estate { border-top: 4px solid #4f9c6b; }
+  .card.estate .card-title { color: #2a6b2a; }
+  .card.mare { border-top: 4px solid #3f8aa3; }
+  .card.mare .card-title { color: #3f8aa3; }
+  .card.inverno { border-top: 4px solid #b56b6b; }
+  .card.inverno .card-title { color: #b56b6b; }
+
+  footer {
+    text-align: center;
+    color: #aaa;
+    font-size: 11px;
+    margin-top: 32px;
+  }
+  footer a { color: #888; text-decoration: none; }
+</style>
+</head>
+<body>
+<div class="container">
+  <header>
+    <h1>🌸 Skincare Dashboard</h1>
+    <p>La tua routine per ogni periodo dell'anno</p>
+    <span class="today-badge" id="today-badge">Oggi: caricamento…</span>
+  </header>
+
+  <div class="auto-banner" id="auto-banner" style="display:none;">
+    <strong>📍 In base alla data di oggi</strong>, dovresti usare → <a href="#" id="auto-link">questa dashboard</a>
+  </div>
+
+  <div class="cards">
+    <a href="estate.html" class="card estate" data-id="estate">
+      <div class="card-icon">🌿</div>
+      <h2 class="card-title">Estate</h2>
+      <p class="card-sub">Senza Epiduo · routine ponte</p>
+      <p class="card-period">3 giugno → 4 luglio · 5 agosto → 14 settembre 2026</p>
+    </a>
+
+    <a href="mare.html" class="card mare" data-id="mare">
+      <div class="card-icon">🌊</div>
+      <h2 class="card-title">Mare</h2>
+      <p class="card-sub">Vacanza · routine semplificata + protezione massima</p>
+      <p class="card-period">5 luglio → 5 agosto 2026</p>
+    </a>
+
+    <a href="inverno.html" class="card inverno" data-id="inverno">
+      <div class="card-icon">💗</div>
+      <h2 class="card-title">Standard</h2>
+      <p class="card-sub">Routine completa · con Epiduo + Bassado</p>
+      <p class="card-period">Dal 14 settembre 2026 (ripresa cure)</p>
+    </a>
+  </div>
+
+  <footer>
+    💗 Made with care · By Claude
+  </footer>
+</div>
+
+<script>
+  const today = new Date();
+  const m = today.getMonth() + 1;
+  const d = today.getDate();
+  const y = today.getFullYear();
+
+  // Format today as Italian date
+  const months = ["gennaio","febbraio","marzo","aprile","maggio","giugno","luglio","agosto","settembre","ottobre","novembre","dicembre"];
+  document.getElementById("today-badge").textContent = `Oggi: ${d} ${months[m-1]} ${y}`;
+
+  // Determine which dashboard is the current one
+  // Year-agnostic comparison for 2026 cycle, will work for future years too
+  let currentDashboard = "inverno"; // default
+
+  // Mare: 5 luglio → 5 agosto
+  if ((m === 7 && d >= 5) || (m === 8 && d <= 5)) {
+    currentDashboard = "mare";
+  }
+  // Estate: 3 giugno → 4 luglio
+  else if ((m === 6 && d >= 3) || (m === 7 && d <= 4)) {
+    currentDashboard = "estate";
+  }
+  // Estate: 5 agosto → 14 settembre (post-mare, pre-Epiduo restart)
+  else if ((m === 8 && d > 5) || (m === 9 && d <= 14)) {
+    currentDashboard = "estate";
+  }
+  // Else: inverno standard
+
+  // Highlight current card
+  const activeCard = document.querySelector(`.card[data-id="${currentDashboard}"]`);
+  if (activeCard) {
+    activeCard.classList.add("active");
+    // Show auto-banner
+    const banner = document.getElementById("auto-banner");
+    const link = document.getElementById("auto-link");
+    const labels = { estate: "Estate 🌿", mare: "Mare 🌊", inverno: "Standard 💗" };
+    link.textContent = labels[currentDashboard];
+    link.href = currentDashboard + ".html";
+    banner.style.display = "block";
+  }
+
+  // Optional auto-redirect: uncomment to send user directly to current dashboard
+  // setTimeout(() => { window.location.href = currentDashboard + ".html"; }, 1500);
+</script>
+</body>
+</html>
