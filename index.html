@@ -136,25 +136,25 @@
   </div>
 
   <div class="cards">
+    <a href="inverno.html" class="card inverno" data-id="inverno">
+      <div class="card-icon">💗</div>
+      <h2 class="card-title">Standard</h2>
+      <p class="card-sub">Nuova ricetta · Fluido anti-macchie, Benzolait il sabato, Mask la domenica</p>
+      <p class="card-period">Dall'8 ottobre 2026 · controllo a febbraio 2027</p>
+    </a>
+
     <a href="estate.html" class="card estate" data-id="estate">
       <div class="card-icon">🌿</div>
       <h2 class="card-title">Estate</h2>
-      <p class="card-sub">Senza Epiduo · routine ponte</p>
-      <p class="card-period">3 giugno → 4 luglio · 5 agosto → 14 settembre 2026</p>
+      <p class="card-sub">Senza Epiduo · routine ponte · ricetta di maggio</p>
+      <p class="card-period">3 giugno → 4 luglio · 5 agosto → 14 settembre 2026 · archivio</p>
     </a>
 
     <a href="mare.html" class="card mare" data-id="mare">
       <div class="card-icon">🌊</div>
       <h2 class="card-title">Mare</h2>
-      <p class="card-sub">Vacanza · routine semplificata + protezione massima</p>
-      <p class="card-period">5 luglio → 5 agosto 2026</p>
-    </a>
-
-    <a href="inverno.html" class="card inverno" data-id="inverno">
-      <div class="card-icon">💗</div>
-      <h2 class="card-title">Standard</h2>
-      <p class="card-sub">Routine completa · con Epiduo + Bassado</p>
-      <p class="card-period">Dal 14 settembre 2026 (ripresa cure)</p>
+      <p class="card-sub">Vacanza · routine semplificata + protezione massima · ricetta di maggio</p>
+      <p class="card-period">5 luglio → 5 agosto 2026 · archivio</p>
     </a>
   </div>
 
@@ -174,20 +174,23 @@
   document.getElementById("today-badge").textContent = `Oggi: ${d} ${months[m-1]} ${y}`;
 
   // Determine which dashboard is the current one
-  // Year-agnostic comparison for 2026 cycle, will work for future years too
+  // Estate e Mare valgono solo per l'estate 2026 (ricetta del 06.05.2026):
+  // dal 2027 resta sempre la Standard, aggiornata a ogni nuova ricetta.
   let currentDashboard = "inverno"; // default
 
-  // Mare: 5 luglio → 5 agosto
-  if ((m === 7 && d >= 5) || (m === 8 && d <= 5)) {
-    currentDashboard = "mare";
-  }
-  // Estate: 3 giugno → 4 luglio
-  else if ((m === 6 && d >= 3) || (m === 7 && d <= 4)) {
-    currentDashboard = "estate";
-  }
-  // Estate: 5 agosto → 14 settembre (post-mare, pre-Epiduo restart)
-  else if ((m === 8 && d > 5) || (m === 9 && d <= 14)) {
-    currentDashboard = "estate";
+  if (y === 2026) {
+    // Mare: 5 luglio → 5 agosto
+    if ((m === 7 && d >= 5) || (m === 8 && d <= 5)) {
+      currentDashboard = "mare";
+    }
+    // Estate: 3 giugno → 4 luglio
+    else if ((m === 6 && d >= 3) || (m === 7 && d <= 4)) {
+      currentDashboard = "estate";
+    }
+    // Estate: 5 agosto → 14 settembre (post-mare, pre-Epiduo restart)
+    else if ((m === 8 && d > 5) || (m === 9 && d <= 14)) {
+      currentDashboard = "estate";
+    }
   }
   // Else: inverno standard
 
