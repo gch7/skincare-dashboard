@@ -145,6 +145,19 @@
     opacity: 0.75;
     margin-top: 2px;
   }
+  /* Pallino sul giorno di oggi */
+  nav.days button { position: relative; }
+  nav.days button.oggi::after {
+    content: "";
+    position: absolute;
+    top: 4px;
+    right: 5px;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--primary);
+  }
+  nav.days button.oggi.active::after { background: #fff; }
 
   main {
     max-width: 1100px;
@@ -177,6 +190,7 @@
   }
 
   .session {
+    position: relative;
     background: var(--card);
     border-radius: 18px;
     padding: 22px;
@@ -199,6 +213,25 @@
   .session.mask-night {
     background: linear-gradient(180deg, #fae8ee 0%, #ffffff 70%);
     border-top: 4px solid var(--mask-accent);
+  }
+  /* Apertura automatica: la parte di oggi da fare adesso */
+  .session.adesso {
+    box-shadow: 0 0 0 3px rgba(217,142,142,0.6), 0 10px 26px rgba(217,142,142,0.22);
+  }
+  .session.adesso::before {
+    content: "⏰ ADESSO";
+    position: absolute;
+    top: -12px;
+    left: 18px;
+    background: var(--primary);
+    color: #fff;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.4px;
+    line-height: 1.5;
+    padding: 3px 10px;
+    border-radius: 50px;
+    box-shadow: 0 2px 6px rgba(181,107,107,0.35);
   }
 
   .session-header {
@@ -479,6 +512,8 @@
   @media print {
     nav.days { display: none; }
     .day-panel { display: block !important; page-break-after: always; }
+    .session.adesso { box-shadow: var(--shadow); }
+    .session.adesso::before { display: none; }
   }
 </style>
 </head>
@@ -723,7 +758,7 @@
 
 </main>
 
-<footer>💗 Dashboard generata dalla prescrizione dell'08.10.2026 · Dott.ssa Ines Mordente · <a href="index.html">tutte le dashboard</a></footer>
+<footer>💗 Dashboard generata dalla prescrizione dell'08.10.2026 · Dott.ssa Ines Mordente · <a href="index.html?tutte">tutte le dashboard</a></footer>
 
 <script>
 // ============== PRODOTTI ==============
@@ -943,7 +978,7 @@ const routines = {
 // ============== GIORNI ==============
 // Le note con classe dyn-* vengono aggiornate in base alla data di oggi (vedi renderDynamic)
 const MORNING = {
-  cls: "morning", icon: "☀️", title: "Mattino", time: "Al risveglio",
+  fascia: "mattino", cls: "morning", icon: "☀️", title: "Mattino", time: "Al risveglio",
   notesBefore: [
     ["pill dyn-immuno", "💊 <strong>Prima di colazione</strong>: 1 bustina di <strong>Immunoskin Flora</strong> (per 3 mesi)."],
   ],
@@ -954,7 +989,7 @@ const MORNING = {
 };
 
 const MIDDAY = {
-  cls: "midday", icon: "🌤️", title: "Di giorno", time: "Pranzo · sole",
+  fascia: "giorno", cls: "midday", icon: "🌤️", title: "Di giorno", time: "Pranzo · sole",
   notes: [
     ["pill dyn-capsule", "💊 <strong>Dopo pranzo</strong>: 2 capsule <strong>Capelli e pelle grassa donna</strong>, solo nei 45 giorni \"sì\" del ciclo (poi 15 giorni di pausa)."],
     ["", "☀️ <strong>Al sole?</strong> Riapplica <strong>Sun Skin Control 50+</strong> sul viso ogni 2 ore; sul corpo lo <strong>Spray Solare 50+</strong>."],
@@ -967,13 +1002,13 @@ const DRY_NOTE = ["info", "🏜️ <strong>Pelle che tira o si squama?</strong> 
 const DRY_NOTE_SAB = ["info", "🏜️ <strong>Pelle che tira o si squama?</strong> Quando il Benzolait si è assorbito, come ultimo strato, <strong>Rilastil Acnestil</strong> (vedi 📋 Info)."];
 
 const EVENING_FLUIDO = {
-  cls: "evening", icon: "🌙", title: "Sera", time: "Fluido anti-macchie",
+  fascia: "sera", cls: "evening", icon: "🌙", title: "Sera", time: "Fluido anti-macchie",
   routine: "evening-fluido",
   notes: [DRY_NOTE, BODY_NOTE],
 };
 
 const EVENING_BENZOLAIT = {
-  cls: "evening", icon: "🌙", title: "Sera", time: "Benzolait · 1 volta a settimana",
+  fascia: "sera", cls: "evening", icon: "🌙", title: "Sera", time: "Benzolait · 1 volta a settimana",
   routine: "evening-benzolait",
   notes: [
     ["urgent", "⚠️ <strong>Laser in programma?</strong> Sospendi il Benzolait <strong>7 giorni prima</strong> della seduta."],
@@ -984,7 +1019,7 @@ const EVENING_BENZOLAIT = {
 };
 
 const EVENING_MASK = {
-  cls: "mask-night", icon: "🧖‍♀️", title: "Sera — Mask Day", time: "Posa, poi solo acqua termale",
+  fascia: "sera", cls: "mask-night", icon: "🧖‍♀️", title: "Sera — Mask Day", time: "Posa, poi solo acqua termale",
   routine: "evening-mask",
   notes: [
     ["urgent", "⚠️ <strong>Regola d'oro Mask</strong> (dalla ricetta): finito il tempo di posa lava con acqua, poi <u>SOLO</u> acqua termale. Niente creme né altri prodotti sul viso, nemmeno Rilastil o SOS Stick."],
@@ -1048,7 +1083,7 @@ function renderNotes(notes) {
 function renderSession(s) {
   const steps = s.routine ? `<div class="steps" data-routine="${s.routine}"></div>` : "";
   return `
-    <div class="session ${s.cls}">
+    <div class="session ${s.cls}" data-fascia="${s.fascia || ""}">
       <div class="session-header">
         <span class="session-icon">${s.icon}</span>
         <h3 class="session-title">${s.title}</h3>
@@ -1082,43 +1117,40 @@ function renderRoutines() {
   });
 }
 
+function mostraGiorno(day) {
+  document.querySelectorAll("nav.days button").forEach(b => b.classList.toggle("active", b.dataset.day === day));
+  document.querySelectorAll(".day-panel").forEach(p => p.classList.toggle("active", p.id === "day-" + day));
+  const btn = document.querySelector(`nav.days button[data-day="${day}"]`);
+  if (btn) btn.scrollIntoView({ block: "nearest", inline: "center" });
+}
+
 function setupNav() {
-  const nav = document.getElementById("day-nav");
-  const buttons = nav.querySelectorAll("button");
-  const panels = document.querySelectorAll(".day-panel");
-  buttons.forEach(btn => {
+  document.querySelectorAll("nav.days button").forEach(btn => {
     btn.addEventListener("click", () => {
+      aggiornaMomento();
       const day = btn.dataset.day;
-      buttons.forEach(b => b.classList.remove("active"));
-      btn.classList.add("active");
-      panels.forEach(p => p.classList.remove("active"));
-      const target = document.getElementById("day-" + day);
-      if (target) target.classList.add("active");
-      btn.scrollIntoView({ block: "nearest", inline: "center" });
-      window.scrollTo({ top: 0, behavior: "smooth" });
+      mostraGiorno(day);
+      // Toccando il giorno di oggi si torna alla parte da fare adesso; sugli altri giorni si parte dall'inizio
+      const adesso = day === momento.id ? sessioneAdesso() : null;
+      if (adesso) scorriA(adesso, true);
+      else window.scrollTo({ top: 0, behavior: "smooth" });
     });
   });
 }
 
-function selectToday() {
-  const dayMap = { 1: "lun", 2: "mar", 3: "mer", 4: "gio", 5: "ven", 6: "sab", 0: "dom" };
-  const today = dayMap[new Date().getDay()];
-  const btn = document.querySelector(`nav.days button[data-day="${today}"]`);
-  if (btn) btn.click();
-}
-
 // ============== DATE DELLA TERAPIA ==============
 // Tutto è contato dal giorno della ricetta. Se la terapia è partita un altro giorno, basta cambiare START.
-const START = new Date(2026, 9, 8);          // 8 ottobre 2026 = giorno 1
-const CONTROLLO = new Date(2027, 1, 8);      // controllo tra 4 mesi (~8 febbraio 2027)
-const FINE_IMMUNO = new Date(2027, 0, 8);    // Immunoskin: 3 mesi
-const FINE_UREADIN = new Date(2027, 3, 8);   // Ureadin: 6 mesi
+// Le date si ricostruiscono a ogni uso, così restano nel fuso orario del telefono anche in viaggio.
+const START = () => new Date(2026, 9, 8);          // 8 ottobre 2026 = giorno 1
+const CONTROLLO = () => new Date(2027, 1, 8);      // controllo tra 4 mesi (~8 febbraio 2027)
+const FINE_IMMUNO = () => new Date(2027, 0, 8);    // Immunoskin: 3 mesi
+const FINE_UREADIN = () => new Date(2027, 3, 8);   // Ureadin: 6 mesi
 const DAY = 86400000;
 
-function oggi0() { const o = new Date(); o.setHours(0, 0, 0, 0); return o; }
-function giornoTerapia() { return Math.round((oggi0() - START) / DAY) + 1; }
+function oggi0() { return new Date(momento.giorno); } // mezzanotte del giorno di routine (vedi APERTURA AUTOMATICA)
+function giornoTerapia() { return Math.round((oggi0() - START()) / DAY) + 1; }
 function dataDelGiorno(n) {
-  const d = new Date(START); d.setDate(d.getDate() + n - 1);
+  const d = START(); d.setDate(d.getDate() + n - 1);
   return d.toLocaleDateString("it-IT", { day: "numeric", month: "long" });
 }
 
@@ -1146,14 +1178,14 @@ function statoCapsule(n) {
 }
 
 function statoImmuno() {
-  if (oggi0() <= FINE_IMMUNO) {
+  if (oggi0() <= FINE_IMMUNO()) {
     return ["pill", "💊 <strong>Prima di colazione</strong>: 1 bustina di <strong>Immunoskin Flora</strong> (fino all'8 gennaio 2027)."];
   }
   return ["success", "✅ <strong>Immunoskin Flora</strong>: i 3 mesi sono finiti l'8 gennaio 2027."];
 }
 
 function statoUreadin() {
-  if (oggi0() <= FINE_UREADIN) {
+  if (oggi0() <= FINE_UREADIN()) {
     return ["body", "🧴 <strong>Corpo</strong>: <strong>Ureadin Lotion 10</strong> su tutto il corpo, ogni sera (fino all'8 aprile 2027)."];
   }
   return ["success", "✅ <strong>Ureadin Lotion 10</strong>: i 6 mesi sono finiti l'8 aprile 2027."];
@@ -1173,7 +1205,7 @@ function renderDynamic() {
 
 // Avanzamento terapia: 4 mesi dalla ricetta (08.10.2026) al controllo (~08.02.2027)
 function renderTherapy() {
-  const totale = Math.round((CONTROLLO - START) / DAY);
+  const totale = Math.round((CONTROLLO() - START()) / DAY);
   const n = giornoTerapia();
   const chip = document.getElementById("therapy-chip");
   const bar = document.getElementById("therapy-bar");
@@ -1189,12 +1221,117 @@ function renderTherapy() {
   }
 }
 
+// ============== APERTURA AUTOMATICA ==============
+// La pagina si apre sul giorno e sulla parte giusti in base all'ora.
+// Dopo mezzanotte, fino alle 4, vale ancora la sera del giorno prima.
+const CAMBIO_GIORNO = 4;   // 00:00–03:59 → Sera del giorno prima
+const INIZIO_GIORNO = 12;  // 04:00–11:59 → Mattino
+const INIZIO_SERA = 18;    // 12:00–17:59 → Di giorno · 18:00–03:59 → Sera
+const ID_GIORNI = ["dom", "lun", "mar", "mer", "gio", "ven", "sab"];
+
+function momentoRoutine(ora) {
+  const h = ora.getHours();
+  const notte = h < CAMBIO_GIORNO;
+  const giorno = new Date(ora.getFullYear(), ora.getMonth(), ora.getDate() - (notte ? 1 : 0));
+  const fascia = (notte || h >= INIZIO_SERA) ? "sera" : (h >= INIZIO_GIORNO ? "giorno" : "mattino");
+  return { giorno, fascia, id: ID_GIORNI[giorno.getDay()], chiave: giorno.toDateString() + "|" + fascia };
+}
+
+let momento = momentoRoutine(new Date());
+let toccato = false;
+let nascostaDa = document.visibilityState === "hidden" ? Date.now() : null;  // se finisce di caricarsi già in background
+const LONTANA_MINIMO = 30 * 60 * 1000;  // dopo almeno 30 minuti fuori dall'app, al ritorno riapre sulla parte giusta
+
+function sessioneAdesso() {
+  return document.querySelector(`#day-${momento.id} .session[data-fascia="${momento.fascia}"]`);
+}
+
+function topPagina(el) {
+  let y = 0;
+  for (let e = el; e; e = e.offsetParent) y += e.offsetTop;
+  return y;
+}
+
+// Porta la sessione appena sotto la barra dei giorni (lasciando spazio all'etichetta ADESSO)
+function scorriA(el, liscio) {
+  const nav = document.getElementById("day-nav");
+  const y = topPagina(el) - nav.offsetHeight - 20;
+  window.scrollTo({ top: Math.max(0, y), behavior: liscio ? "smooth" : "auto" });
+}
+
+function segnaAdesso() {
+  document.querySelectorAll(".session.adesso").forEach(s => s.classList.remove("adesso"));
+  document.querySelectorAll("nav.days button.oggi").forEach(b => b.classList.remove("oggi"));
+  const s = sessioneAdesso();
+  if (s) s.classList.add("adesso");
+  const b = document.querySelector(`nav.days button[data-day="${momento.id}"]`);
+  if (b) b.classList.add("oggi");
+  return s;
+}
+
+// Aggiorna il momento (etichetta ADESSO, pallino del giorno, note con le date) senza spostare la pagina
+function aggiornaMomento(ora = new Date(), forza = false) {
+  const nuovo = momentoRoutine(ora);
+  if (!forza && nuovo.chiave === momento.chiave) return;
+  momento = nuovo;
+  renderDynamic();
+  renderTherapy();
+  segnaAdesso();
+}
+
+// Porta la pagina sul giorno di oggi e sulla parte da fare adesso
+function vaiAdesso(liscio) {
+  mostraGiorno(momento.id);
+  const s = sessioneAdesso();
+  if (s) scorriA(s, liscio);
+}
+
+function apriMomentoGiusto(ora = new Date()) {
+  aggiornaMomento(ora, true);
+  vaiAdesso(false);
+}
+
+// Vero se è aperto il giorno di oggi e la parte ADESSO occupa il centro dello schermo
+function giaSullaParteGiusta() {
+  const pannello = document.getElementById("day-" + momento.id);
+  const s = sessioneAdesso();
+  if (!s || !pannello || !pannello.classList.contains("active")) return false;
+  const r = s.getBoundingClientRect();
+  return r.top < window.innerHeight / 2 && r.bottom > window.innerHeight / 2;
+}
+
+function segnaNascosta() { if (nascostaDa === null) nascostaDa = Date.now(); }
+
+// Ritorno nell'app (iPhone): dopo almeno 30 minuti fuori riapre sulla parte giusta,
+// a meno che non ci sia già (es. a metà della maschera della domenica).
+// Se si rientra prima (es. telefono bloccato a metà routine) la pagina resta dov'è:
+// se intanto è cambiato il momento si spostano solo l'etichetta ADESSO e le note del giorno.
+function controllaAlRitorno() {
+  if (document.visibilityState === "hidden") { segnaNascosta(); return; }
+  const lontana = nascostaDa !== null && Date.now() - nascostaDa >= LONTANA_MINIMO;
+  nascostaDa = null;
+  aggiornaMomento();
+  if (lontana && !giaSullaParteGiusta()) vaiAdesso(false);
+}
+document.addEventListener("visibilitychange", controllaAlRitorno);
+window.addEventListener("pagehide", segnaNascosta);
+window.addEventListener("pageshow", e => { if (e.persisted) controllaAlRitorno(); });
+window.addEventListener("focus", controllaAlRitorno);
+
+// Se a caricamento finito l'impaginazione si è spostata e lo schermo non è ancora stato toccato, riallinea
+["touchstart", "wheel", "keydown", "mousedown"].forEach(ev =>
+  window.addEventListener(ev, () => { toccato = true; }, { once: true, passive: true }));
+window.addEventListener("load", () => {
+  const s = sessioneAdesso();
+  const pannello = document.getElementById("day-" + momento.id);
+  if (!toccato && s && pannello && pannello.classList.contains("active")) scorriA(s, false);
+});
+
+if ("scrollRestoration" in history) history.scrollRestoration = "manual";
 renderDays();
 renderRoutines();
-renderDynamic();
 setupNav();
-selectToday();
-renderTherapy();
+apriMomentoGiusto();
 </script>
 
 </body>

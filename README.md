@@ -10,7 +10,9 @@ Personal skincare routine, organized by season.
 
 ## How to use
 
-Open **[index.html](index.html)** — the landing page auto-detects today's date and highlights the right dashboard.
+Open **[index.html](index.html)** — it goes straight to the dashboard in use today. The Standard then opens on today's day and on the right part of it: Mattino 4:00–12:00, Di giorno 12:00–18:00, Sera 18:00–4:00 (after midnight it still shows the previous evening). Coming back to the app after at least 30 minutes reopens it on the right part (unless it is already there); a quicker return usually leaves the page where it was and only moves the "ADESSO" label. If iOS has closed the page in the meantime, it reopens on the right part. The hours are the constants at the top of the `APERTURA AUTOMATICA` block in `inverno.html`.
+
+The list of all dashboards, archive included: **[index.html?tutte](index.html?tutte)**.
 
 For best experience: open in Safari on iPhone → tap Share → Add to Home Screen.
 

@@ -4,6 +4,29 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
 <title>🌸 Skincare Dashboard</title>
+<script>
+  // Apre subito la dashboard in uso oggi; la Standard poi va da sola al giorno e alla parte giusti.
+  // L'elenco di tutte le dashboard resta su index.html?tutte
+  (function () {
+    const t = new Date();
+    const y = t.getFullYear(), m = t.getMonth() + 1, d = t.getDate();
+    // Estate e Mare valgono solo per l'estate 2026 (ricetta del 06.05.2026):
+    // dal 2027 resta sempre la Standard, aggiornata a ogni nuova ricetta.
+    let pagina = "inverno";
+    if (y === 2026) {
+      if ((m === 7 && d >= 5) || (m === 8 && d <= 5)) pagina = "mare";          // 5 luglio → 5 agosto
+      else if ((m === 6 && d >= 3) || (m === 7 && d <= 4)) pagina = "estate";   // 3 giugno → 4 luglio
+      else if ((m === 8 && d > 5) || (m === 9 && d <= 14)) pagina = "estate";   // 6 agosto → 14 settembre
+    }
+    window.DASHBOARD_ATTUALE = pagina;
+    if (!new URLSearchParams(location.search).has("tutte")) {
+      // nasconde l'elenco mentre passa alla dashboard; se il passaggio non riesce lo mostra dopo 3 secondi
+      document.documentElement.style.visibility = "hidden";
+      setTimeout(() => { document.documentElement.style.visibility = ""; }, 3000);
+      location.replace(pagina + ".html");
+    }
+  })();
+</script>
 <meta name="apple-mobile-web-app-capable" content="yes" />
 <meta name="mobile-web-app-capable" content="yes" />
 <meta name="apple-mobile-web-app-title" content="Skincare" />
@@ -173,26 +196,8 @@
   const months = ["gennaio","febbraio","marzo","aprile","maggio","giugno","luglio","agosto","settembre","ottobre","novembre","dicembre"];
   document.getElementById("today-badge").textContent = `Oggi: ${d} ${months[m-1]} ${y}`;
 
-  // Determine which dashboard is the current one
-  // Estate e Mare valgono solo per l'estate 2026 (ricetta del 06.05.2026):
-  // dal 2027 resta sempre la Standard, aggiornata a ogni nuova ricetta.
-  let currentDashboard = "inverno"; // default
-
-  if (y === 2026) {
-    // Mare: 5 luglio → 5 agosto
-    if ((m === 7 && d >= 5) || (m === 8 && d <= 5)) {
-      currentDashboard = "mare";
-    }
-    // Estate: 3 giugno → 4 luglio
-    else if ((m === 6 && d >= 3) || (m === 7 && d <= 4)) {
-      currentDashboard = "estate";
-    }
-    // Estate: 5 agosto → 14 settembre (post-mare, pre-Epiduo restart)
-    else if ((m === 8 && d > 5) || (m === 9 && d <= 14)) {
-      currentDashboard = "estate";
-    }
-  }
-  // Else: inverno standard
+  // La dashboard in uso oggi è calcolata nello script in <head>
+  const currentDashboard = window.DASHBOARD_ATTUALE || "inverno";
 
   // Highlight current card
   const activeCard = document.querySelector(`.card[data-id="${currentDashboard}"]`);
@@ -206,9 +211,6 @@
     link.href = currentDashboard + ".html";
     banner.style.display = "block";
   }
-
-  // Optional auto-redirect: uncomment to send user directly to current dashboard
-  // setTimeout(() => { window.location.href = currentDashboard + ".html"; }, 1500);
 </script>
 </body>
 </html>
